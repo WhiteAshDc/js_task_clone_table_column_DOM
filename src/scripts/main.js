@@ -1,9 +1,20 @@
 'use strict';
 
-const table = [...document.querySelector('table').rows];
+const th = document.querySelectorAll('th');
 
-for (const key of table) {
-  const el = key.cells[1].cloneNode(true);
+for (const head of th) {
+  head.addEventListener('click', sort);
+}
 
-  key.cells[3].after(el);
+function sort() {
+  const arr = [...document.querySelector('table').rows].slice(1);
+
+  arr.sort((a, b) => parseFloat(a.cells[4].innerHTML
+    .replaceAll('$', '')
+    .replaceAll(',', '')) - parseFloat(b.cells[4].innerHTML
+    .replaceAll('$', '').replaceAll(',', '')));
+
+  const tbody = document.querySelector('tbody');
+
+  tbody.append(...arr);
 }
